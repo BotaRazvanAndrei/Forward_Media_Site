@@ -62,7 +62,8 @@ input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,5vw,50px);color:#1A1D2E;text-align:center;margin-bottom:8px;letter-spacing:1px}
 .section-desc{font-size:16px;color:rgba(26,29,46,.5);text-align:center;max-width:460px;margin:0 auto 44px;line-height:1.6}
 .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;margin-bottom:22px}
-.svc-card{background:#fff;border-radius:14px;border:2.5px solid #1A1D2E;box-shadow:5px 5px 0 0 #1A1D2E;overflow:hidden;transition:all .2s}
+.svc-card{background:#fff;border-radius:14px;border:2.5px solid #1A1D2E;box-shadow:5px 5px 0 0 #1A1D2E;overflow:hidden;transition:all .2s;position:relative}
+    .beta-sticker{position:absolute;top:18px;right:-26px;background:#E8C547;color:#1A1D2E;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:5px 32px;transform:rotate(35deg);box-shadow:0 2px 6px rgba(0,0,0,.18)}
 .svc-card:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 0 #1A1D2E}
 .svc-header{background:#D04030;padding:24px 22px 20px}
 .svc-header h3{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;letter-spacing:1px;margin:10px 0 0;line-height:1.1}
@@ -183,7 +184,6 @@ footer p{font-size:12px;color:rgba(255,255,255,.2)}
         <div class="svc-header">
           <svg width="38" height="38" viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="28" rx="4" stroke="#fff" stroke-width="2.5"/><polygon points="20,18 20,30 31,24" fill="#fff"/></svg>
           <h3 data-t="svc1">Social Media Videos</h3>
-          <span class="svc-tag" data-t="svc1tag">Service 1</span>
         </div>
         <div class="svc-body">
           <h4 data-t="svc1desc">Scroll-stopping content</h4>
@@ -195,7 +195,6 @@ footer p{font-size:12px;color:rgba(255,255,255,.2)}
         <div class="svc-header">
           <svg width="38" height="38" viewBox="0 0 48 48" fill="none"><rect x="4" y="12" width="28" height="22" rx="3" stroke="#fff" stroke-width="2.5"/><path d="M32 18L44 12V36L32 30Z" fill="#fff"/></svg>
           <h3 data-t="svc2">Ad Videos</h3>
-          <span class="svc-tag" data-t="svc2tag">Service 2</span>
         </div>
         <div class="svc-body">
           <h4 data-t="svc2desc">Convert viewers into customers</h4>
@@ -207,7 +206,7 @@ footer p{font-size:12px;color:rgba(255,255,255,.2)}
         <div class="svc-header">
           <svg width="38" height="38" viewBox="0 0 48 48" fill="none"><rect x="6" y="6" width="36" height="36" rx="4" stroke="#fff" stroke-width="2.5"/><line x1="14" y1="34" x2="14" y2="26" stroke="#fff" stroke-width="3" stroke-linecap="round"/><line x1="22" y1="34" x2="22" y2="20" stroke="#fff" stroke-width="3" stroke-linecap="round"/><line x1="30" y1="34" x2="30" y2="16" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M12 24L22 16L32 20L40 10" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
           <h3 data-t="svc3">Ads Management</h3>
-          <span class="svc-tag" data-t="svc3tag">Service 3</span>
+          <span class="beta-sticker">In Testing</span>
         </div>
         <div class="svc-body">
           <h4 data-t="svc3desc">Maximize your Meta Ads ROI</h4>
@@ -275,7 +274,7 @@ const t={
   en:{tagline:"Video Production Agency",heroTitle:'We Make Brands <span>Move Forward</span>',heroDesc:"High-impact video content and ad strategies that capture attention, build trust, and drive real results.",startProject:"Start a Project",ourServices:"Our Services",getQuote:"Get a Quote",brands:"Brands that trust us",whatWeOffer:"What We Offer",offerDesc:"End-to-end video production and advertising to grow your brand.",
     svc1:"Social Media Videos",svc1tag:"Service 1",svc1desc:"Scroll-stopping content",svc1b:["Short-form for TikTok, Reels & Shorts","Brand storytelling & BTS","Content calendar strategy","Optimized per platform"],
     svc2:"Ad Videos",svc2tag:"Service 2",svc2desc:"Convert viewers into customers",svc2b:["High-converting ad creatives","Product launch videos","Testimonial & UGC style ads","A/B testing variations"],
-    svc3:"Ads Management",svc3tag:"Service 3",svc3desc:"Maximize your Meta Ads ROI",svc3b:["Full Meta Ads setup & management","Audience targeting & lookalikes","Budget optimization & scaling","Weekly performance reporting"],
+    svc3:"Ads Management",svc3tag:"Service 3",svc3desc:"Maximize Meta Ads returns with our custom AI",svc3b:["Proprietary AI tool built for Meta Ads optimization","Full Meta Ads setup & management","Audience targeting & lookalikes","Budget optimization & scaling","Weekly performance reporting"],
     customPkg:"Custom Package",customTitle:"Need Something Unique?",customDesc:"Let's build a custom video & marketing package for your goals and budget.",letsTalk:"Let's Talk →",
     ourWork:"Our Work",ourWorkDesc:"The site is brand new — this section is still under construction. Check back soon!",underConstruction:"Under Construction",
     reviews:"What Our Clients Say",reviewsDesc:"Real feedback from brands we've worked with.",
@@ -285,7 +284,7 @@ const t={
   ro:{tagline:"Agenție de Producție Video",heroTitle:'We Make Brands <span>Move Forward</span>',heroDesc:"Conținut video de impact și strategii publicitare care captează atenția, construiesc încredere și aduc rezultate reale.",startProject:"Începe un Proiect",ourServices:"Serviciile Noastre",getQuote:"Cere o Ofertă",brands:"Branduri care ne acordă încredere",whatWeOffer:"Ce Oferim",offerDesc:"Producție video și publicitate completă pentru creșterea brandului tău.",
     svc1:"Videoclipuri Social Media",svc1tag:"Serviciu 1",svc1desc:"Conținut care oprește scrollul",svc1b:["Video scurt pentru TikTok, Reels & Shorts","Storytelling de brand & BTS","Strategie calendar de conținut","Optimizat per platformă"],
     svc2:"Videoclipuri Publicitare",svc2tag:"Serviciu 2",svc2desc:"Transformă vizitatorii în clienți",svc2b:["Creații publicitare cu conversie mare","Videoclipuri de lansare produs","Reclame stil testimonial & UGC","Variații pentru teste A/B"],
-    svc3:"Management Reclame",svc3tag:"Serviciu 3",svc3desc:"Maximizează ROI-ul pe Meta Ads",svc3b:["Setup & management complet Meta Ads","Targetare audiență & lookalikes","Optimizare buget & scalare","Raportare săptămânală de performanță"],
+    svc3:"Management Reclame",svc3tag:"Serviciu 3",svc3desc:"Maximizează returnul pe Meta Ads cu AI-ul nostru custom",svc3b:["Instrument AI special creat pentru Meta Ads","Setup & management complet Meta Ads","Targetare audiență & lookalikes","Optimizare buget & scalare","Raportare săptămânală de performanță"],
     customPkg:"Pachet Personalizat",customTitle:"Ai nevoie de ceva unic?",customDesc:"Hai să construim un pachet video & marketing adaptat obiectivelor și bugetului tău.",letsTalk:"Hai să Vorbim →",
     ourWork:"Lucrările Noastre",ourWorkDesc:"Site-ul este nou — această secțiune este încă în construcție. Revino curând!",underConstruction:"În Construcție",
     reviews:"Ce Spun Clienții Noștri",reviewsDesc:"Feedback real de la branduri cu care am lucrat.",
