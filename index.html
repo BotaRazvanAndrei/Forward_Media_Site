@@ -174,6 +174,20 @@ footer{background:#12141F;padding:56px 24px 28px}
   .footer-grid{grid-template-columns:1fr 1fr;gap:28px 20px}
   .footer-brand{grid-column:1/-1}
 }
+
+/* SCROLL REVEAL: text slides up; 3D cards/buttons slide up flat like the text, then their black shadow springs out (hero: on load; others: scrubbed by scroll) */
+.rv-up{opacity:0;transform:translateY(28px)}
+.rv-run{transition:opacity .6s ease,transform .7s cubic-bezier(.22,1,.36,1)!important}
+.rv-pop{visibility:hidden}
+.rv-spring{animation:rvSpring .8s both}
+.rv-scrub{animation:rvSpring 1s linear both paused}
+@keyframes rvSpring{
+  0%{opacity:0;transform:translate(5px,33px);box-shadow:0 0 0 0 #1A1D2E;animation-timing-function:cubic-bezier(.22,1,.36,1)}
+  42%{opacity:1;transform:translate(5px,5px);box-shadow:0 0 0 0 #1A1D2E}
+  52%{transform:translate(5px,5px);box-shadow:0 0 0 0 #1A1D2E;animation-timing-function:cubic-bezier(.2,.9,.3,1)}
+  70%{transform:translate(-3px,-3px);box-shadow:8px 8px 0 0 #1A1D2E;animation-timing-function:ease-in-out}
+  85%{transform:translate(1px,1px);box-shadow:3px 3px 0 0 #1A1D2E;animation-timing-function:ease-in-out}
+}
 </style>
 </head>
 <body>
@@ -456,10 +470,50 @@ function submitForm(){
     </div>`;
 }
 
+// SCROLL REVEAL: text slides up; hero buttons pop on load; other 3D cards slide up flat, then their black shadow springs out as you scroll
+(function(){
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const textSel='.hero h1,.hero p,.brands p,.brands-row img,.section-title,.section-desc,.custom-offer .label,.custom-offer h3,.custom-offer p,.custom-offer .btn,.contact h2,.contact .desc,.contact-form,.footer-grid>div';
+  const io=new IntersectionObserver(entries=>{
+    const inView=entries.filter(e=>e.isIntersecting).map(e=>e.target);
+    inView.filter(el=>el.classList.contains('rv-up')).forEach((el,i)=>{
+      const d=i*90;io.unobserve(el);
+      el.style.transitionDelay=d+'ms';el.classList.add('rv-run');el.classList.remove('rv-up');
+      setTimeout(()=>{el.classList.remove('rv-run');el.style.transitionDelay=''},d+800);
+    });
+    inView.filter(el=>el.classList.contains('rv-pop')).forEach((el,i)=>{
+      io.unobserve(el);el.style.animationDelay=(250+i*110)+'ms';el.classList.add('rv-spring');el.classList.remove('rv-pop');
+      el.addEventListener('animationend',function end(ev){if(ev.target!==el)return;el.classList.remove('rv-spring');el.style.animationDelay='';el.removeEventListener('animationend',end)});
+    });
+  },{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+  // scrubbed pop: progress 0→1 while the card's top moves from the bottom of the screen up 70% of the screen height; it only moves forward, so a popped card stays popped
+  let cards=[],ticking=false;
+  function scrub(){
+    const vh=innerHeight,atEnd=scrollY+vh>=document.documentElement.scrollHeight-2;
+    cards=cards.filter(c=>{
+      const el=c.el;if(!el.isConnected)return false;
+      c.p=Math.max(c.p,atEnd?1:Math.min(1,Math.max(0,(vh-el.getBoundingClientRect().top-c.off)/(vh*.7))));
+      if(c.p>=1){el.classList.remove('rv-scrub');return false}
+      el.classList.add('rv-scrub');
+      const a=el.getAnimations().find(a=>a.animationName==='rvSpring');if(a)a.currentTime=c.p*1000;
+      return true;
+    });
+  }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{ticking=false;scrub()})}},{passive:true});
+  addEventListener('resize',scrub);
+  window.initReveal=()=>{
+    document.querySelectorAll(textSel).forEach(el=>{el.classList.add('rv-up');io.observe(el)});
+    document.querySelectorAll('.hero-btns .btn').forEach(el=>{el.classList.add('rv-pop');io.observe(el)});
+    cards=[...document.querySelectorAll('.svc-card,.ourwork-card,#reviewsTrack .review-card')].map(el=>({el,p:0,off:([...el.parentNode.children].indexOf(el)%4)*60}));
+    scrub();
+  };
+})();
+
 // INIT
 buildReviews();
 setLang(new URLSearchParams(location.search).get('lang')==='en'?'en':'ro');
 requestAnimationFrame(animateReviews);
+if(window.initReveal)initReveal();
 </script>
 </body>
 </html>
