@@ -94,6 +94,8 @@ input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 .review-card .text{font-size:13px;color:rgba(26,29,46,.65);line-height:1.6;margin-bottom:14px;min-height:48px}
 .review-card .name{font-size:13px;font-weight:700;color:#1A1D2E;margin:0}
 .review-card .co{font-size:11px;color:rgba(26,29,46,.4);margin:0}
+.review-card .tr-note{font-size:10px;color:rgba(26,29,46,.35);margin:10px 0 0}
+.review-card .tr-note a{color:inherit}
 
 /* CONTACT */
 .contact{background:#1A1D2E;padding:70px 24px;position:relative}
@@ -316,26 +318,31 @@ function setLang(l){
     const container=document.getElementById('svc'+i+'bullets');
     if(container)container.innerHTML=d['svc'+i+'b'].map(b=>'<p class="bullet"><span>• </span>'+b+'</p>').join('');
   }
+  buildReviews();
 }
 
 // REVIEWS CAROUSEL
 const reviews=[
-  {name:"Irina T.",co:"Momentum Sports",text:"Calitate premium și profesionalism. Colaborăm cu Forward Media din 2024 și punem spune cu toată bucuria că sunt o echipă pe care te poți baza de la concept până la edit-ul final. Rezultatele sunt vizibile, iar noi le vom fi întotdeauna recunoscători!"},
-  {name:"Gabriel B.",co:"Music Hub Cluj",text:"Profesioniști, creativi și mereu la timp. Știu exact ce funcționează!"},
-  {name:"Dan N.",co:"M.A.S.T",text:"Music video-uri foarte tari si la preturi foarte accesibile!"},
-  {name:"Maria R.",co:"",text:"Rezultate cu adevărat remarcabile."},
+  {name:"Irina T.",co:"Momentum Sports",text:"Calitate premium și profesionalism. Colaborăm cu Forward Media din 2024 și punem spune cu toată bucuria că sunt o echipă pe care te poți baza de la concept până la edit-ul final. Rezultatele sunt vizibile, iar noi le vom fi întotdeauna recunoscători!",en:"Premium quality and professionalism. We've been working with Forward Media since 2024 and we can happily say they're a team you can rely on, from concept to the final edit. The results are visible, and we'll always be grateful to them!"},
+  {name:"Gabriel B.",co:"Music Hub Cluj",text:"Profesioniști, creativi și mereu la timp. Știu exact ce funcționează!",en:"Professional, creative and always on time. They know exactly what works!"},
+  {name:"Dan N.",co:"M.A.S.T",text:"Music video-uri foarte tari si la preturi foarte accesibile!",en:"Really great music videos at very affordable prices!"},
+  {name:"Maria R.",co:"",text:"Rezultate cu adevărat remarcabile.",en:"Truly remarkable results."},
 ];
+
+let showOrig={};
+function toggleOrig(j){showOrig[j]=!showOrig[j];buildReviews()}
 
 function buildReviews(){
   const track=document.getElementById('reviewsTrack');
   const all=[...reviews,...reviews];
-  track.innerHTML=all.map(r=>`
+  track.innerHTML=all.map((r,i)=>{const j=i%reviews.length,tr=lang==='en'&&!showOrig[j];return `
     <div class="review-card">
       <div class="stars">${STAR.repeat(5)}</div>
-      <p class="text">"${r.text}"</p>
+      <p class="text">"${tr?r.en:r.text}"</p>
       <p class="name">${r.name}</p>
       ${r.co?'<p class="co">'+r.co+'</p>':''}
-    </div>`).join('');
+      ${lang==='en'?'<p class="tr-note">'+(tr?'Translated from Romanian':'Original')+' · <a href="#" onclick="event.preventDefault();toggleOrig('+j+')">'+(tr?'See original':'See translation')+'</a></p>':''}
+    </div>`}).join('');
 }
 
 let offset=0,paused=false;
