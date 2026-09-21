@@ -54,6 +54,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+a,button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:'DM Sans',sans-serif;background:#FDF8F0;color:#1A1D2E}
 ::placeholder{color:rgba(255,255,255,.25)!important}
@@ -66,9 +67,9 @@ input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 .nav-links{display:flex;gap:22px;align-items:center}
 .nav-links a{font-size:13px;font-weight:500;color:#1A1D2E;text-decoration:none}
 .mobile-burger{display:none;background:none;border:none;cursor:pointer;padding:9px;margin:-9px}
-.mobile-menu{display:none;background:#FDF8F0;padding:12px 24px 20px;flex-direction:column;gap:14px;border-top:1px solid rgba(26,29,46,.06)}
+.mobile-menu{display:flex;visibility:hidden;max-height:0;opacity:0;overflow:hidden;background:#FDF8F0;padding:0 24px;flex-direction:column;gap:14px;border-top:0 solid rgba(26,29,46,.06);transition:max-height .3s ease,padding .3s ease,opacity .2s ease,visibility 0s linear .3s}
 .mobile-menu a{font-size:16px;color:#1A1D2E;text-decoration:none}
-.mobile-menu.open{display:flex}
+.mobile-menu.open{visibility:visible;max-height:400px;opacity:1;padding:12px 24px 20px;border-top-width:1px;transition:max-height .3s ease,padding .3s ease,opacity .25s ease .05s,visibility 0s}
 @media(max-width:768px){
   .nav-links{display:none!important}
   .mobile-burger{display:block!important}
@@ -78,7 +79,8 @@ input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 
 /* BUTTONS */
 .btn{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border-radius:10px;padding:14px 28px;cursor:pointer;border:2.5px solid #1A1D2E;box-shadow:4px 4px 0 0 #1A1D2E;transition:all .15s;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none}
-.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 0 #1A1D2E}
+@media(hover:hover){.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 0 #1A1D2E}}
+@media(hover:none){.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 0 #1A1D2E}.contact-form .btn:active{box-shadow:2px 2px 0 0 rgba(255,255,255,.1)}.footer-social:active{border-color:#D04030;background:#D04030}}
 .btn-primary{background:#D04030;color:#fff}
 .btn-secondary{background:#fff;color:#1A1D2E}
 .btn-gold{background:#E8C547;color:#1A1D2E}
@@ -111,7 +113,7 @@ input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:22px;margin-bottom:22px}
 .svc-card{background:#fff;border-radius:14px;border:2.5px solid #1A1D2E;box-shadow:5px 5px 0 0 #1A1D2E;overflow:hidden;transition:all .2s;position:relative}
     .beta-sticker{position:absolute;top:18px;right:-26px;background:#E8C547;color:#1A1D2E;font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:5px 32px;transform:rotate(35deg);box-shadow:0 2px 6px rgba(0,0,0,.18)}
-.svc-card:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 0 #1A1D2E}
+@media(hover:hover){.svc-card:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 0 #1A1D2E}}
 .svc-header{background:#D04030;padding:24px 22px 20px}
 .svc-header h3{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;letter-spacing:1px;margin:10px 0 0;line-height:1.1}
 .svc-tag{font-size:11px;font-weight:600;background:rgba(255,255,255,.2);color:#fff;border-radius:5px;padding:4px 10px;display:inline-block;margin-top:10px}
@@ -154,7 +156,7 @@ input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 .contact-form label{font-size:12px;font-weight:600;color:rgba(255,255,255,.45);display:block;margin-bottom:6px}
 .contact-form input,.contact-form textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:15px;padding:13px 15px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.12);border-radius:10px;color:#fff;box-sizing:border-box;margin-bottom:16px;resize:vertical}
 .contact-form .btn{width:100%;justify-content:center;border:2.5px solid rgba(255,255,255,.25);box-shadow:4px 4px 0 0 rgba(255,255,255,.1)}
-.contact-form .btn:hover{box-shadow:2px 2px 0 0 rgba(255,255,255,.1)}
+@media(hover:hover){.contact-form .btn:hover{box-shadow:2px 2px 0 0 rgba(255,255,255,.1)}}
 .sent-msg{text-align:center;padding:40px;background:rgba(255,255,255,.05);border-radius:14px;border:2.5px solid rgba(255,255,255,.12)}
 .sent-msg .check{font-size:44px;color:#E8C547;margin-bottom:12px}
 .sent-msg h3{font-family:'Bebas Neue',sans-serif;font-size:30px;color:#fff;letter-spacing:1px;margin-bottom:6px}
@@ -166,12 +168,12 @@ footer{background:#12141F;padding:56px 24px 28px}
 .footer-brand img{height:64px;margin-bottom:8px}
 .footer-brand p{font-size:14px;color:rgba(255,255,255,.45);line-height:1.6;max-width:260px;margin-bottom:20px}
 .footer-social{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.15);color:#fff;transition:all .15s}
-.footer-social:hover{border-color:#D04030;background:#D04030}
+@media(hover:hover){.footer-social:hover{border-color:#D04030;background:#D04030}}
 .footer-col h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:14px}
 .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.5);text-decoration:none;margin-bottom:10px;transition:color .15s}
-.footer-col a:hover{color:#fff}
+@media(hover:hover){.footer-col a:hover{color:#fff}}
 .footer-col a.footer-cta{display:inline-block;color:#fff;font-weight:600;text-decoration:underline;text-decoration-color:#D04030;text-decoration-thickness:2px;text-underline-offset:5px}
-.footer-col a.footer-cta:hover{color:#D04030}
+@media(hover:hover){.footer-col a.footer-cta:hover{color:#D04030}}
 .footer-bottom{max-width:1140px;margin:40px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);font-size:12px;color:rgba(255,255,255,.3)}
 @media(max-width:768px){
   .footer-grid{grid-template-columns:1fr 1fr;gap:28px 20px}
@@ -403,6 +405,8 @@ function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('op
 function closeMenu(){document.getElementById('mobileMenu').classList.remove('open')}
 
 function setLang(l){
+  const navH=document.querySelector('.nav').offsetHeight;let ael=null,atop=0;
+  document.querySelectorAll('h1,h2,h3,h4,p,.btn,.svc-card,.custom-offer,.ourwork-card,.reviews-track-wrap,.contact-form,.footer-grid>div,.footer-bottom').forEach(e=>{const t=e.getBoundingClientRect().top;if(t>=navH&&(!ael||t<atop)&&!e.closest('.reviews-track,[id$=bullets]')){ael=e;atop=t}});
   lang=l;
   document.querySelectorAll('.lang-btn').forEach(b=>{
     b.classList.toggle('active',b.textContent===l.toUpperCase());
@@ -421,6 +425,7 @@ function setLang(l){
     if(container)container.innerHTML=d['svc'+i+'b'].map(b=>'<p class="bullet"><span>• </span>'+b+'</p>').join('');
   }
   buildReviews();
+  if(ael&&scrollY>0){const dy=ael.getBoundingClientRect().top-atop;if(Math.abs(dy)>.5){const h=document.documentElement;h.style.scrollBehavior='auto';window.scrollBy(0,dy);h.style.scrollBehavior=''}}
 }
 
 // REVIEWS CAROUSEL
@@ -523,6 +528,7 @@ buildReviews();
 setLang(new URLSearchParams(location.search).get('lang')==='en'?'en':'ro');
 requestAnimationFrame(animateReviews);
 if(window.initReveal)initReveal();
+document.addEventListener('touchstart',()=>{},{passive:true});
 </script>
 </body>
 </html>
