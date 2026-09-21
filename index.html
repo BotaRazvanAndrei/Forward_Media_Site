@@ -52,18 +52,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{font-family:'DM Sans',sans-serif;background:#FDF8F0;color:#1A1D2E}
 ::placeholder{color:rgba(255,255,255,.25)!important}
 input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(253,248,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,29,46,.06)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(253,248,240,.92);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(26,29,46,.06)}
 .nav-inner{max-width:1140px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{height:52px;cursor:pointer}
 .nav-links{display:flex;gap:22px;align-items:center}
 .nav-links a{font-size:13px;font-weight:500;color:#1A1D2E;text-decoration:none}
-.mobile-burger{display:none;background:none;border:none;cursor:pointer}
+.mobile-burger{display:none;background:none;border:none;cursor:pointer;padding:9px;margin:-9px}
 .mobile-menu{display:none;background:#FDF8F0;padding:12px 24px 20px;flex-direction:column;gap:14px;border-top:1px solid rgba(26,29,46,.06)}
 .mobile-menu a{font-size:16px;color:#1A1D2E;text-decoration:none}
 .mobile-menu.open{display:flex}
