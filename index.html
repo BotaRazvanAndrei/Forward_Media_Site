@@ -1,9 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Forward Media — Video Production Agency</title>
+<title>Forward Media — Agenție de Producție Video & Publicitate</title>
+<meta name="description" content="Agenție de producție video din România: videoclipuri pentru TikTok, Reels și Shorts, reclame video și management Meta Ads. Cere o ofertă.">
+<link rel="canonical" href="https://www.forwardmedia.ro/">
+<link rel="alternate" hreflang="ro" href="https://www.forwardmedia.ro/">
+<link rel="alternate" hreflang="en" href="https://www.forwardmedia.ro/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://www.forwardmedia.ro/">
+<meta name="theme-color" content="#FDF8F0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Forward Media">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Forward Media">
+<meta property="og:url" content="https://www.forwardmedia.ro/">
+<meta property="og:title" content="Forward Media — Agenție de Producție Video & Publicitate">
+<meta property="og:description" content="Videoclipuri pentru TikTok, Reels și Shorts, reclame video și management Meta Ads. We Make Brands Move Forward.">
+<meta property="og:image" content="https://www.forwardmedia.ro/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Forward Media — We Make Brands Move Forward">
+<meta property="og:locale" content="ro_RO">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Forward Media — Agenție de Producție Video & Publicitate">
+<meta name="twitter:description" content="Videoclipuri pentru TikTok, Reels și Shorts, reclame video și management Meta Ads.">
+<meta name="twitter:image" content="https://www.forwardmedia.ro/og-image.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Forward Media",
+  "url": "https://www.forwardmedia.ro/",
+  "logo": "https://www.forwardmedia.ro/icon-512.png",
+  "image": "https://www.forwardmedia.ro/og-image.jpg",
+  "description": "Agenție de producție video și publicitate din România: videoclipuri social media, reclame video și management Meta Ads.",
+  "slogan": "We Make Brands Move Forward",
+  "email": "forwardmediaro@gmail.com",
+  "areaServed": { "@type": "Country", "name": "Romania" },
+  "knowsAbout": ["Video production", "Social media video", "Video advertising", "Meta Ads management"],
+  "sameAs": ["https://www.instagram.com/forwardmediaro"]
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -320,6 +364,7 @@ const t={
     contactTitle:"Ready to Move Forward?",contactDesc:"Drop us a message and we'll get back within 24 hours.",
     name:"Name",email:"Email",message:"Message",send:"Send Message",sent:"Message Sent!",sentDesc:"We'll be in touch soon.",
     ftTagline:"Video production & advertising agency. We make brands move forward.",ftCompany:"Company",ftContact:"Contact us",ftCopy:"© 2026 Forward Media. All rights reserved.",
+    docTitle:"Forward Media — Video Production & Advertising Agency",docDesc:"Video production agency in Romania: short-form videos for TikTok, Reels and Shorts, video ads and Meta Ads management. Get a quote.",
     nav:["Services","Our Work","Reviews","Contact"]},
   ro:{tagline:"Agenție de Producție Video",heroTitle:'We Make Brands <span>Move Forward</span>',heroDesc:"Conținut video de impact și strategii publicitare care captează atenția, construiesc încredere și aduc rezultate reale.",startProject:"Începe un Proiect",ourServices:"Serviciile Noastre",getQuote:"Cere o Ofertă",brands:"Branduri care ne acordă încredere",whatWeOffer:"Ce Oferim",offerDesc:"Producție video și publicitate completă pentru creșterea brandului tău.",
     svc1:"Videoclipuri Social Media",svc1tag:"Serviciu 1",svc1desc:"Conținut care oprește scrollul",svc1b:["Video scurt pentru TikTok, Reels & Shorts","Storytelling de brand & BTS","Strategie calendar de conținut","Optimizat per platformă"],
@@ -331,6 +376,7 @@ const t={
     contactTitle:"Ready to Move Forward?",contactDesc:"Trimite-ne un mesaj și revenim în 24 de ore.",
     name:"Nume",email:"Email",message:"Mesaj",send:"Trimite Mesajul",sent:"Mesaj Trimis!",sentDesc:"Te vom contacta în curând.",
     ftTagline:"Agenție de producție video & publicitate. Ducem brandurile mai departe.",ftCompany:"Companie",ftContact:"Contactează-ne",ftCopy:"© 2026 Forward Media. Toate drepturile rezervate.",
+    docTitle:"Forward Media — Agenție de Producție Video & Publicitate",docDesc:"Agenție de producție video din România: videoclipuri pentru TikTok, Reels și Shorts, reclame video și management Meta Ads. Cere o ofertă.",
     nav:["Servicii","Lucrări","Recenzii","Contact"]}
 };
 
@@ -346,6 +392,7 @@ function setLang(l){
     b.classList.toggle('active',b.textContent===l.toUpperCase());
   });
   const d=t[l];
+  document.documentElement.lang=l;document.title=d.docTitle;document.querySelector('meta[name="description"]').content=d.docDesc;
   document.querySelectorAll('[data-t]').forEach(el=>{
     const k=el.getAttribute('data-t');
     if(k==='heroTitle'){el.innerHTML=d.heroTitle;}
@@ -411,7 +458,7 @@ function submitForm(){
 
 // INIT
 buildReviews();
-setLang('ro');
+setLang(new URLSearchParams(location.search).get('lang')==='en'?'en':'ro');
 requestAnimationFrame(animateReviews);
 </script>
 </body>
