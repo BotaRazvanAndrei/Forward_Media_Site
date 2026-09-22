@@ -130,6 +130,9 @@ input:focus,textarea:focus{border-color:#D04030!important;outline:none}
 
 /* OUR WORK */
 .ourwork{background:#fff;padding:70px 24px;border-top:3px solid #D04030}
+.stat{width:fit-content;margin:0 auto 40px;background:#FDF8F0;border:2.5px solid #1A1D2E;border-radius:14px;box-shadow:5px 5px 0 0 #1A1D2E;padding:16px 38px;text-align:center}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,9vw,66px);color:#D04030;line-height:1;letter-spacing:2px;font-variant-numeric:tabular-nums}
+.stat-label{font-size:12px;font-weight:600;color:rgba(26,29,46,.5);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
 .ourwork-card{background:#FDF8F0;border-radius:14px;border:2.5px solid #1A1D2E;box-shadow:5px 5px 0 0 #1A1D2E;padding:48px 32px;margin-top:32px;max-width:700px;margin-left:auto;margin-right:auto;text-align:center}
 .ourwork-card h3{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#1A1D2E;letter-spacing:1px;margin:20px 0 12px}
 .ourwork-card p{font-size:15px;color:rgba(26,29,46,.55);line-height:1.6;max-width:440px;margin:0 auto}
@@ -327,7 +330,11 @@ footer{background:#12141F;padding:56px 24px 28px}
 <!-- OUR WORK -->
 <section class="ourwork" id="ourwork">
   <h2 class="section-title" data-t="ourWork">Our Work</h2>
-  <p class="section-desc" data-t="ourWorkDesc">Over 15 projects delivered. Below, a few videos from this year.</p>
+  <p class="section-desc" data-t="ourWorkDesc">Videos from this year's projects.</p>
+  <div class="stat">
+    <div class="stat-num"><span id="statNum" data-to="15">15</span>+</div>
+    <div class="stat-label" data-t="statLabel">Projects delivered</div>
+  </div>
   <div class="wheel" id="wheel">
     <div class="wheel-stage" id="wheelStage"></div>
     <button class="wheel-btn prev" onclick="wheelGo(-1)" aria-label="Previous">
@@ -403,7 +410,7 @@ const t={
     svc2:"Ad Videos",svc2tag:"Service 2",svc2desc:"Convert viewers into customers",svc2b:["High-converting ad creatives","Product launch videos","Testimonial & UGC style ads","A/B testing variations"],
     svc3:"Ads Management",svc3tag:"Service 3",svc3desc:"Maximize Meta Ads returns with our custom AI",svc3b:["Proprietary AI tool built for Meta Ads optimization","Full Meta Ads setup & management","Audience targeting & lookalikes","Budget optimization & scaling","Weekly performance reporting"],
     customPkg:"Custom Package",customTitle:"Need Something Unique?",customDesc:"Let's build a custom video & marketing package for your goals and budget.",letsTalk:"Let's Talk →",
-    ourWork:"Our Work",ourWorkDesc:"Over 15 projects delivered. Below, a few videos from this year.",underConstruction:"Under Construction",
+    ourWork:"Our Work",ourWorkDesc:"Videos from this year's projects.",statLabel:"Projects delivered",underConstruction:"Under Construction",
     reviews:"What Our Clients Say",reviewsDesc:"Real feedback from brands we've worked with.",
     contactTitle:"Ready to Move Forward?",contactDesc:"Drop us a message and we'll get back within 24 hours.",
     name:"Name",email:"Email",message:"Message",send:"Send Message",sent:"Message Sent!",sentDesc:"We'll be in touch soon.",
@@ -415,7 +422,7 @@ const t={
     svc2:"Videoclipuri Publicitare",svc2tag:"Serviciu 2",svc2desc:"Transformă vizitatorii în clienți",svc2b:["Creații publicitare cu conversie mare","Videoclipuri de lansare produs","Reclame stil testimonial & UGC","Variații pentru teste A/B"],
     svc3:"Management Reclame",svc3tag:"Serviciu 3",svc3desc:"Maximizează rezultatele reclamelor Meta cu AI-ul nostru personalizat.",svc3b:["Instrument AI special creat pentru Meta Ads","Setup & management complet Meta Ads","Targetare audiență & lookalikes","Optimizare buget & scalare","Raportare săptămânală de performanță"],
     customPkg:"Pachet Personalizat",customTitle:"Ai nevoie de ceva unic?",customDesc:"Hai să construim un pachet video & marketing adaptat obiectivelor și bugetului tău.",letsTalk:"Hai să Vorbim →",
-    ourWork:"Lucrările Noastre",ourWorkDesc:"Peste 15 proiecte realizate. Mai jos, câteva videoclipuri din acest an.",underConstruction:"În Construcție",
+    ourWork:"Lucrările Noastre",ourWorkDesc:"Videoclipuri din proiectele de anul acesta.",statLabel:"Proiecte realizate",underConstruction:"În Construcție",
     reviews:"Ce Spun Clienții Noștri",reviewsDesc:"Feedback real de la branduri cu care am lucrat.",
     contactTitle:"Ready to Move Forward?",contactDesc:"Trimite-ne un mesaj și revenim în 24 de ore.",
     name:"Nume",email:"Email",message:"Mesaj",send:"Trimite Mesajul",sent:"Mesaj Trimis!",sentDesc:"Te vom contacta în curând.",
@@ -545,8 +552,23 @@ function submitForm(){
   },{threshold:.15,rootMargin:'0px 0px -8% 0px'});
   window.initReveal=()=>{
     document.querySelectorAll(textSel).forEach(el=>{el.classList.add('rv-up');io.observe(el)});
-    document.querySelectorAll('.hero-btns .btn,.svc-card,.ourwork-card,#reviewsTrack .review-card').forEach(el=>{el.classList.add('rv-pop');io.observe(el)});
+    document.querySelectorAll('.hero-btns .btn,.svc-card,.ourwork-card,.stat,#reviewsTrack .review-card').forEach(el=>{el.classList.add('rv-pop');io.observe(el)});
   };
+})();
+
+// STAT COUNTER: the "15+" counts up the first time it scrolls into view (once). No JS / reduced motion = the final number, never 0.
+(function(){
+  const el=document.getElementById('statNum');if(!el)return;
+  const to=+el.dataset.to||15;
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=to;return}
+  el.textContent='0';
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(!e.isIntersecting)return;io.unobserve(e.target);
+    setTimeout(()=>{const dur=1100,t0=performance.now();
+      requestAnimationFrame(function step(now){const p=Math.min((now-t0)/dur,1);
+        el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step)})},260);
+  })},{threshold:.6});
+  io.observe(el);
 })();
 
 // OUR WORK WHEEL: the middle video is in focus and playing; the others sit behind it, blurred
