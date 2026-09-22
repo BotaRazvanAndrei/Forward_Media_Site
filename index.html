@@ -24,17 +24,17 @@
 <meta property="og:url" content="https://www.forwardmedia.ro/">
 <meta property="og:title" content="Forward Media — Agenție de Producție Video & Publicitate">
 <meta property="og:description" content="Videoclipuri pentru TikTok, Reels și Shorts, reclame video și management Meta Ads. We Make Brands Move Forward.">
-<meta property="og:image" content="https://www.forwardmedia.ro/og-image.jpg">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Forward Media — We Make Brands Move Forward">
+<meta property="og:image" content="https://www.forwardmedia.ro/icon-512.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="Forward Media">
 <meta property="og:locale" content="ro_RO">
 <meta property="og:locale:alternate" content="en_US">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Forward Media — Agenție de Producție Video & Publicitate">
 <meta name="twitter:description" content="Videoclipuri pentru TikTok, Reels și Shorts, reclame video și management Meta Ads.">
-<meta name="twitter:image" content="https://www.forwardmedia.ro/og-image.jpg">
+<meta name="twitter:image" content="https://www.forwardmedia.ro/icon-512.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -556,21 +556,6 @@ function submitForm(){
   };
 })();
 
-// STAT COUNTER: the "15+" counts up the first time it scrolls into view (once). No JS / reduced motion = the final number, never 0.
-(function(){
-  const el=document.getElementById('statNum');if(!el)return;
-  const to=+el.dataset.to||15;
-  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=to;return}
-  el.textContent='0';
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{
-    if(!e.isIntersecting)return;io.unobserve(e.target);
-    setTimeout(()=>{const dur=1100,t0=performance.now();
-      requestAnimationFrame(function step(now){const p=Math.min((now-t0)/dur,1);
-        el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step)})},260);
-  })},{threshold:.6});
-  io.observe(el);
-})();
-
 // OUR WORK WHEEL: the middle video is in focus and playing; the others sit behind it, blurred
 const works=[
   {f:'cars-1',n:'CARS Academy',l:'C',logo:'logos/cars.png'},{f:'cars-2',n:'CARS Academy',l:'C',logo:'logos/cars.png'},{f:'cars-3',n:'CARS Academy',l:'C',logo:'logos/cars.png'},
@@ -586,6 +571,7 @@ const ICO={
   play:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>',
   pause:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.6" height="14" rx="1.2"/><rect x="13.4" y="5" width="3.6" height="14" rx="1.2"/></svg>'};
 let wcur=Math.max(0,works.findIndex(w=>w.f==='pro-conect-1'));   // Pro Conect starts in front
+let wheelArmed=false,wheelOn=false;   // armed = the 15+ counter has finished; on = the section is on screen. The front video waits for both.
 function wheelBuild(){
   const stage=document.getElementById('wheelStage');
   stage.innerHTML=works.map((w,i)=>`
@@ -610,7 +596,7 @@ function wheelLayout(){
     c.style.pointerEvents=a>2?'none':'auto';
     const ct=c.querySelector('.work-ctrls');ct.style.opacity=a?0:1;ct.style.pointerEvents=a?'none':'auto';
     if(a<=1&&!v.src)v.src=v.dataset.src;
-    if(a===0){if(v.src){v.play().then(wheelIcons).catch(()=>wheelIcons());if(!v.__sync){v.__sync=1;v.addEventListener('play',wheelIcons);v.addEventListener('pause',wheelIcons)}}}else{v.pause();v.muted=true}
+    if(a===0){if(v.src){if(wheelArmed&&wheelOn)v.play().then(wheelIcons).catch(()=>wheelIcons());if(!v.__sync){v.__sync=1;v.addEventListener('play',wheelIcons);v.addEventListener('pause',wheelIcons)}}}else{v.pause();v.muted=true}
   });
   wheelIcons();
 }
@@ -620,15 +606,18 @@ function wheelIcons(){const v=wheelCentre();if(!v)return;const c=v.closest('.wor
 function wheelPlay(i){const v=wheelCentre();if(!v)return;if(v.paused)v.play().catch(()=>{});else v.pause();wheelIcons()}
 function wheelMute(i){const v=wheelCentre();if(!v)return;v.muted=!v.muted;if(!v.muted&&v.paused)v.play().catch(()=>{});wheelIcons()}
 function wheelCentre(){const c=[...document.getElementById('wheelStage').children].find(c=>+c.dataset.i===wcur);return c&&c.querySelector('video')}
+function wheelArm(){if(wheelArmed)return;wheelArmed=true;const v=wheelCentre();if(wheelOn&&v&&v.src)v.play().then(wheelIcons).catch(()=>wheelIcons())}
 function wheelGo(d){wcur=(wcur+d+works.length)%works.length;wheelLayout()}
 function wheelTap(i){if(i!==wcur){wcur=i;wheelLayout()}}
 (function(){
   const wheel=document.getElementById('wheel');if(!wheel)return;
   // only play while the section is on screen
   if('IntersectionObserver' in window)new IntersectionObserver(es=>es.forEach(e=>{
+    wheelOn=e.isIntersecting;
     const v=wheelCentre();if(!v||!v.src)return;
-    if(e.isIntersecting)v.play().catch(()=>{});else{v.pause();v.muted=true;wheelLayout()}
+    if(wheelOn){if(wheelArmed)v.play().catch(()=>{})}else{v.pause();v.muted=true;wheelLayout()}
   }),{threshold:.25}).observe(wheel);
+  else wheelOn=true;
   // swipe sideways on touch screens
   if(matchMedia('(hover: none)').matches){
     const stage=document.getElementById('wheelStage');stage.style.touchAction='pan-y';
@@ -643,6 +632,23 @@ function wheelTap(i){if(i!==wcur){wcur=i;wheelLayout()}}
     stage.addEventListener('pointercancel',()=>{id=null});
   }
   addEventListener('resize',wheelLayout);
+})();
+
+// STAT COUNTER: the "15+" counts up the first time it scrolls into view (once), then 150ms later the front video starts (muted) via wheelArm().
+// No JS / reduced motion = the final number, never 0, and the video is armed straight away.
+(function(){
+  const el=document.getElementById('statNum');if(!el){wheelArm();return}
+  const to=+el.dataset.to||15;
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=to;wheelArm();return}
+  el.textContent='0';
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{
+    if(!e.isIntersecting)return;io.unobserve(e.target);
+    setTimeout(()=>{const dur=1100,t0=performance.now();
+      requestAnimationFrame(function step(now){const p=Math.min((now-t0)/dur,1);
+        el.textContent=Math.round(to*(1-Math.pow(1-p,3)));
+        if(p<1)requestAnimationFrame(step);else setTimeout(wheelArm,150)})},260);
+  })},{threshold:.6});
+  io.observe(el);
 })();
 
 // INIT
